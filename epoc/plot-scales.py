@@ -8,17 +8,54 @@ task but computer didn't record the EPOC results :|
 """
 import glob
 import json
+from collections import OrderedDict
 
 import matplotlib; matplotlib.use('Qt5Agg')
 import matplotlib.pyplot as plt; plt.ion()
+from matplotlib.patches import Patch
 
 import pyplotparams
 
 
+# override plot yticksize bc so many on LuCiD plots
+matplotlib.rcParams['ytick.labelsize'] = 'small'
+
 # unique plot parameters
 SCALE_ORDER = ['DLQ','LuCiD']
 SUBJECT_ORDER = ['sub-001','sub-003','sub-004']
-SCALE_COLORS = dict(DLQ='silver',LuCiD='silver')
+DLQ_COLOR = 'silver'
+
+# make a color scheme for the LuCiD factors
+LuCiD_COLORS = OrderedDict([ # ordered for legend
+    ('insight',       'cornflowerblue'),
+    ('control',       'powderblue'),
+    ('thought',       'plum'),
+    ('realism',       'sandybrown'),
+    ('memory',        'gold'),
+    ('dissociation',  'palevioletred'),
+    ('neg_emotion',   'lightcoral'),
+    ('pos_emotion',   'lightgreen')
+])
+LuCiD_FACTORS = {
+    'insight':       [1,3,8,9,16,19],
+    'control':       [4,6,10,14,23],
+    'thought':       [5,12,22],
+    'realism':       [7,17,20],
+    'memory':        [2,13,18,24],
+    'dissociation':  [11,15,21],
+    'neg_emotion':   [26,28],
+    'pos_emotion':   [25,27]
+}
+# clean up this shitshow by making a
+# list of 27 colors, one for each LuCiD probe
+LuCiD_colorcodes = []
+for i in range(27):
+    quest_num = i+1
+    for factor, question_numbers in LuCiD_FACTORS.items():
+        if quest_num in question_numbers:
+            LuCiD_colorcodes.append(LuCiD_COLORS[factor])
+# and finally a dict to choose from during plotting
+SCALE_COLORS = dict(DLQ=DLQ_COLOR,LuCiD=LuCiD_colorcodes)
 
 
 DATA_DIR  = glob.os.path.expanduser('~/DBp/proj/bcilu/EPOC/data')
@@ -57,6 +94,14 @@ for subj, scale_dict in data.items():
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         # ax.grid(True,axis='x',which='major',linestyle='--',linewidth=.25,color='k',alpha=1)
+        if axrow == 0:
+            ax.set_title(subj)
+
+# legend
+legend_handles = [ Patch(facecolor=color,label=factor)
+                   for factor, color in LuCiD_COLORS.items() ]
+plt.legend(handles=legend_handles,title='LuCiD factors',
+           loc='upper left',frameon=False,bbox_to_anchor=(1,1))
 
 plt.tight_layout()
 
