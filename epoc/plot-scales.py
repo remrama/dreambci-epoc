@@ -83,6 +83,8 @@ for subj, scale_dict in data.items():
 
         # draw bars
         xvals = range(len(responses))
+        # pad the zeros a bit to emphasize
+        responses = [ .05 if r==0 else r for r in responses ]
         ax.barh(xvals,responses,color=SCALE_COLORS[scale])
 
         # aesthetics
@@ -91,6 +93,7 @@ for subj, scale_dict in data.items():
         ax.set_yticklabels([ f'{scale}-{i+1:02d}' for i in xvals ],
                            rotation=25)
         ax.set_xticks(range(max(responses)+1))
+        ax.set_xlim(-.05,max(responses)+.05)
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         # ax.grid(True,axis='x',which='major',linestyle='--',linewidth=.25,color='k',alpha=1)
