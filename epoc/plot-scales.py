@@ -17,9 +17,6 @@ from matplotlib.patches import Patch
 import pyplotparams
 
 
-# override plot yticksize bc so many on LuCiD plots
-matplotlib.rcParams['ytick.labelsize'] = 'small'
-
 # unique plot parameters
 SCALE_ORDER = ['DLQ','LuCiD']
 SUBJECT_ORDER = ['sub-001','sub-003','sub-004']
@@ -27,14 +24,14 @@ DLQ_COLOR = 'silver'
 
 # make a color scheme for the LuCiD factors
 LuCiD_COLORS = OrderedDict([ # ordered for legend
-    ('insight',       'cornflowerblue'),
-    ('control',       'powderblue'),
-    ('thought',       'plum'),
-    ('realism',       'sandybrown'),
-    ('memory',        'gold'),
-    ('dissociation',  'palevioletred'),
-    ('neg_emotion',   'lightcoral'),
-    ('pos_emotion',   'lightgreen')
+    ('insight',       'navy'),
+    ('control',       'blue'),
+    ('thought',       'cornflowerblue'),
+    ('realism',       'darkred'),
+    ('memory',        'lightblue'),
+    ('dissociation',  'red'),
+    ('neg_emotion',   'indianred'),
+    ('pos_emotion',   'lightcoral')
 ])
 LuCiD_FACTORS = {
     'insight':       [1,3,8,9,16,19],
@@ -88,10 +85,11 @@ for subj, scale_dict in data.items():
         ax.barh(xvals,responses,color=SCALE_COLORS[scale])
 
         # aesthetics
-        ax.invert_yaxis()
         ax.set_yticks(xvals) # because barhorizontal
-        ax.set_yticklabels([ f'{scale}-{i+1:02d}' for i in xvals ],
-                           rotation=25)
+        yticklabels = [ f'{scale}-{i+1:02d}' for i in xvals ]
+        yticklabel_fontsize = 'xx-small' if scale=='LuCiD' else 'small'
+        ax.set_yticklabels(yticklabels,fontsize=yticklabel_fontsize,rotation=25)
+        ax.invert_yaxis()
         ax.set_xticks(range(max(responses)+1))
         ax.set_xlim(-.05,max(responses)+.05)
         ax.spines['top'].set_visible(False)
