@@ -51,7 +51,8 @@ subj_order = seg_df['subj'].sort_values().unique().tolist()
 
 
 # open figure with both axes
-fig, (ax1,ax2) = plt.subplots(1,2,figsize=(12,9))
+fig, (ax1,ax2) = plt.subplots(1,2,figsize=(12,6),
+                              gridspec_kw={'width_ratios':[1,2]})
 
 # draw bootstrapped distributions on first axis...
 violin_data = pd.np.hstack([boot_dfs[subj_order[0]],
@@ -66,7 +67,7 @@ plt.setp(viols['bodies'],
 # ...and raw on second
 sea.swarmplot(data=seg_df[seg_df['post_EM']==False],
               x='subj',y='activation',
-              color='lightgray',size=8,
+              color='lightgray',size=6,
               edgecolor='white',linewidth=.2,
               order=subj_order,ax=ax2)
 
@@ -79,12 +80,12 @@ for ax in [ax1,ax2]:
     ax.plot([0,0,1,1],pd.np.ravel([s3testvals,s4testvals]),
         markerfacecolor='k',markeredgecolor='white',
         linestyle='none',markeredgewidth=1,
-        marker='o',markersize=12,zorder=99)
+        marker='o',markersize=10,zorder=99)
     # one mean test value per subject
     ax.hlines(y=s3testvals.mean(),xmin=0-HZ_WIDTH/2,xmax=0+HZ_WIDTH/2,
-              linestyle='--',linewidth=1,color='k',zorder=100)
+              linestyle='-',linewidth=1,color='k',zorder=100)
     ax.hlines(y=s4testvals.mean(),xmin=1-HZ_WIDTH/2,xmax=1+HZ_WIDTH/2,
-              linestyle='--',linewidth=1,color='k',zorder=100)
+              linestyle='-',linewidth=1,color='k',zorder=100)
 
 # aesthetics
 for ax in [ax1,ax2]:
