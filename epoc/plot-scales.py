@@ -88,12 +88,19 @@ for subj, scale_dict in data.items():
         ax.set_yticks(xvals) # because barhorizontal
         yticklabels = [ f'{scale}-{i+1:02d}' for i in xvals ]
         yticklabel_fontsize = 'xx-small' if scale=='LuCiD' else 'small'
-        ax.set_yticklabels(yticklabels,fontsize=yticklabel_fontsize,rotation=25)
         ax.invert_yaxis()
         ax.set_xticks(range(max(responses)+1))
         ax.set_xlim(-.05,max(responses)+.05)
+        if axcol == 1:
+            ax.invert_xaxis()
+            ax.yaxis.tick_right()
+            ax.yaxis.set_ticks_position('right')
+            ax.spines['left'].set_visible(False)
+            ax.set_yticklabels([])
+        else:
+            ax.spines['right'].set_visible(False)
+            ax.set_yticklabels(yticklabels,fontsize=yticklabel_fontsize)
         ax.spines['top'].set_visible(False)
-        ax.spines['right'].set_visible(False)
         # ax.grid(True,axis='x',which='major',linestyle='--',linewidth=.25,color='k',alpha=1)
         if axrow == 0:
             ax.set_title(subj)
