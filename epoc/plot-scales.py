@@ -131,9 +131,9 @@ for subj, scale_dict in data.items():
         xvals = range(len(responses))
         # pad the zeros a bit to emphasize
         responses = [ .05 if r==0 else r for r in responses ]
-        # linewidth = 1 if scale=='DLQ' else 0
+        barwidth = .8
         ax.barh(xvals,responses,color=SCALE_COLORS[scale],
-                linewidth=0,edgecolor='k')
+                height=barwidth,linewidth=.5,edgecolor='k')
 
         # aesthetics
         ax.set_yticks(xvals) # because barhorizontal
