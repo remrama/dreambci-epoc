@@ -22,6 +22,55 @@ SCALE_ORDER = ['DLQ','LuCiD']
 SUBJECT_ORDER = ['sub-001','sub-003','sub-004']
 DLQ_COLOR = 'silver'
 
+# put scale questions on yaxis for DLQ but LuCiD's are too long
+# (also these are shorthand for the DLQ probes)
+YTICKLABELS = {
+    'DLQ': [
+        'I was aware that I was dreaming.',
+        'I was aware that my physical body was asleep.',
+        'I was aware that my dream characters weren\'t real.',
+        'I chose one action instead of another.',
+        'I was aware that dream objects were not real.',
+        'I changed dream events the way I wanted.',
+        'I recalled facts from waking life.',
+        'I changed dream characters the way I wanted.',
+        'I broke physical laws of waking reality.',
+        'I changed the dream scene the way I wanted.',
+        'I thought about possibilities of what I could do.',
+        'I remembered intentions of what I wanted to do.'
+    ],
+    'LuCiD': [
+        'I was aware that was I was experiencing was not real.',
+        'I remembered my intention to do certain things.',
+        'I was aware the my dream self was not my waking self.',
+        'I was able to control other dream characters.',
+        'I thought about other dream characters.',
+        'I was able to perform supernatural actions.',
+        'The emotions I experienced were the same as they would be during wakefulness.',
+        'I was aware that my dream body did not correspond to my waking body.',
+        'I was certain my dream experiences had no consequences on the real world.',
+        'I was able to control the dream environment.',
+        'I saw myself from the outside.',
+        'I thought about my own actions.',
+        'I felt that I had forgotten something important.',
+        'I was able to change or move objects unlike in waking.',
+        'I was not myself but a completely different person.',
+        'I often asked myself whether I was dreaming.',
+        'The thoughts I had were the same as I would have during wakefuless.',
+        'I had the feeling that I could remember my waking life.',
+        'I was aware that other dream characters were not real.',
+        'Most things could have also happened during wakefulness.',
+        'I watched the dream from the outside, as if on a screen.',
+        'I often thought about the things I was experiencing.',
+        'I was able to influence the storyline of my dreams.',
+        'I was able to remember certain plans for the future.',
+        'I felt euphoric/upbeat.',
+        'I had strong negative feelings.',
+        'I had strong positive feelings.',
+        'I felt very anxious.'
+    ]
+}
+
 # make a color scheme for the LuCiD factors
 LuCiD_COLORS = OrderedDict([ # ordered for legend
     ('insight',       'navy'),
@@ -82,16 +131,24 @@ for subj, scale_dict in data.items():
         xvals = range(len(responses))
         # pad the zeros a bit to emphasize
         responses = [ .05 if r==0 else r for r in responses ]
-        ax.barh(xvals,responses,color=SCALE_COLORS[scale])
+        # linewidth = 1 if scale=='DLQ' else 0
+        ax.barh(xvals,responses,color=SCALE_COLORS[scale],
+                linewidth=0,edgecolor='k')
 
         # aesthetics
         ax.set_yticks(xvals) # because barhorizontal
-        yticklabels = [ f'{scale}-{i+1:02d}' for i in xvals ]
+        # if scale == 'DLQ':
+        #     yticklabels = DLQ_YTICKS
+        # else:
+        #     yticklabels = [ f'{scale}-{i+1:02d}' for i in xvals ]
         yticklabel_fontsize = 'xx-small' if scale=='LuCiD' else 'small'
-        ax.set_yticklabels(yticklabels,fontsize=yticklabel_fontsize,rotation=25)
+        if axcol == 0:
+            ax.set_yticklabels(YTICKLABELS[scale],fontsize=yticklabel_fontsize)
+        else:
+            ax.set_yticklabels([])
         ax.invert_yaxis()
         ax.set_xticks(range(max(responses)+1))
-        ax.set_xlim(-.05,max(responses)+.05)
+        # ax.set_xlim(-.05,max(responses)+.05)
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         # ax.grid(True,axis='x',which='major',linestyle='--',linewidth=.25,color='k',alpha=1)
