@@ -1,14 +1,13 @@
 """
 Print the length of an EPOC+ TestBench file.
 """
-from os.path import expanduser
 from mne.io import read_raw_edf
 
 SUBJ = 'sub-003'
 SESS = 'ses-002'
 stamp = '20151115T134018'
 
-datadir = expanduser('~/DBp/proj/bcilu/EPOC/data')
+datadir = '../data'
 fname = f'{datadir}/{SUBJ}/{SESS}/{SUBJ}_{SESS}_testbench-{stamp}.edf'
 
 edf = read_raw_edf(fname)

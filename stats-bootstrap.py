@@ -18,7 +18,7 @@ import pandas as pd
 
 N_RESAMPLES = 10000
 
-DERIV_DIR = glob.os.path.expanduser('~/DBp/proj/bcilu/EPOC/derivatives')
+DERIV_DIR = '../derivatives'
 fnames = glob.glob(f'{DERIV_DIR}/*/*/*segmentation.tsv')
 
 

@@ -17,6 +17,11 @@ from matplotlib.patches import Patch
 import pyplotparams
 
 
+DATA_DIR  = '../data'
+DERIV_DIR = '../derivatives'
+
+fnames = glob.glob(f'{DATA_DIR}/*/*/*wakesurvey.json')
+
 # unique plot parameters
 SCALE_ORDER = ['DLQ','LuCiD']
 SUBJECT_ORDER = ['sub-001','sub-003','sub-004']
@@ -103,11 +108,6 @@ for i in range(27):
 # and finally a dict to choose from during plotting
 SCALE_COLORS = dict(DLQ=DLQ_COLOR,LuCiD=LuCiD_colorcodes)
 
-
-DATA_DIR  = glob.os.path.expanduser('~/DBp/proj/bcilu/EPOC/data')
-DERIV_DIR = glob.os.path.expanduser('~/DBp/proj/bcilu/EPOC/derivatives')
-
-fnames = glob.glob(f'{DATA_DIR}/*/*/*wakesurvey.json')
 
 # load data into a nest dict { subj: {scale: values} }
 data = {}

@@ -22,7 +22,7 @@ DISTRN_COLOR = 'lightgray'
 HZ_WIDTH = 0.1 # of horizontal bar marking mean test values
 
 
-DERIV_DIR = glob.os.path.expanduser('~/DBp/proj/bcilu/EPOC/derivatives')
+DERIV_DIR = '../derivatives'
 
 # segment files for plotting the raw distribution
 seg_fnames = glob.glob(f'{DERIV_DIR}/*/*/*segmentation.tsv')
