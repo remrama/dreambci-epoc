@@ -13,6 +13,7 @@ Export bootstrap distributions as
 tsv files for plotting.
 """
 import glob
+import json
 import pandas as pd
 
 
@@ -56,19 +57,19 @@ for infn in fnames:
     # extract identifying info
     subject, session, run = glob.os.path.basename(infn).split('_')[:3]
 
-    # create results message
-    results_msg = (
-        f'SUBJECT              : {subject}\n'
-      + f'SESSION              : {session}\n'
-      + f'RUN                  : {run}\n'
-      + f'LRLR_TIMESTAMP       : {lrlr_timestamp}\n'
-      + f'TEST_SCORES          : {test_scores}\n'
-      + f'MEAN_TEST_SCORE      : {mean_test_score}\n'
-      + f'NULL_DISTRIBUTION_CI : {null_ci}\n'
-      + f'PVALUE               : {pval}'
-    )
+    # create results payload
+    results = {
+        'subject'              : subject,
+        'session'              : session,
+        'run'                  : run,
+        'lrlr_timestamp'       : lrlr_timestamp,
+        'test_scores'          : test_scores,
+        'mean_test_score'      : mean_test_score,
+        'null_distribution_ci' : null_ci,
+        'pvalue'               : pval
+    }
 
-    # export results message as text file
-    results_outfn = infn.replace('_segmentation.tsv','_results.txt')
+    # export results
+    results_outfn = infn.replace('_segmentation.tsv','_results.json')
     with open(results_outfn,'w') as outfile:
-        outfile.write(results_msg)
+        json.dump(results,outfile,ensure_ascii=False,indent=4)
