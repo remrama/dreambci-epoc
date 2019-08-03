@@ -18,7 +18,7 @@ import pyplotparams
 
 
 DATA_DIR  = '../data'
-DERIV_DIR = '../derivatives'
+DERIV_DIR = '../data/derivatives'
 
 fnames = glob.glob(f'{DATA_DIR}/*/*/*wakesurvey.json')
 
