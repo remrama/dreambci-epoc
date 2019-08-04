@@ -26,6 +26,7 @@ fnames = glob.glob(f'{DATA_DIR}/*/*/*wakesurvey.json')
 SCALE_ORDER = ['DLQ','LuCiD']
 SUBJECT_ORDER = ['sub-001','sub-003','sub-004']
 DLQ_COLOR = 'silver'
+LuCiD_CMAP = 'Pastel2'
 
 # put scale questions on yaxis for DLQ but LuCiD's are too long
 # (also these are shorthand for the DLQ probes)
@@ -77,16 +78,11 @@ YTICKLABELS = {
 }
 
 # make a color scheme for the LuCiD factors
-LuCiD_COLORS = OrderedDict([ # ordered for legend
-    ('insight',       'navy'),
-    ('control',       'blue'),
-    ('thought',       'cornflowerblue'),
-    ('realism',       'darkred'),
-    ('memory',        'lightblue'),
-    ('dissociation',  'red'),
-    ('neg_emotion',   'indianred'),
-    ('pos_emotion',   'lightcoral')
-])
+LuCiD_ORDER = ['insight','control','thought','realism','memory',
+               'dissociation','neg_emotion','pos_emotion']
+LuCiD_COLORS = OrderedDict( # ordered for legend
+    [ (factor, plt.get_cmap(LuCiD_CMAP).colors[i])
+        for i, factor in enumerate(LuCiD_ORDER) ])
 LuCiD_FACTORS = {
     'insight':       [1,3,8,9,16,19],
     'control':       [4,6,10,14,23],
