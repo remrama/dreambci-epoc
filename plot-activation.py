@@ -89,9 +89,8 @@ for ax in [ax1,ax2]:
 
 # aesthetics
 for ax in [ax1,ax2]:
-    ax.axhline(0,ls='--',linewidth=.5,color='k',zorder=-5)
     ax.set_xlim(-.5,1.5)
-    ax.set_ylim(-.02,1)
+    ax.set_ylim(0,1)
     ax.set_yticks([0,.2,.4,.6,.8,1])
     ax.set_yticks(pd.np.linspace(0,1,21),minor=True)
     ax.set_xticks([0,1])
