@@ -96,7 +96,7 @@ for ax in [ax1,ax2]:
     ax.set_xticks([0,1])
     ax.set_xticklabels(subj_order)
     ax.set_xlabel('Participant')
-    ax.set_ylabel('Mental command detection')
+    ax.set_ylabel('MBPT detection')
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
 
